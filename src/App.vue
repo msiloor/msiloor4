@@ -1,12 +1,30 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import './assets/css/app.css'
+import AsidePanel from './components/asidePanel.vue'
+import SystemButton from './components/systemButton.vue'
+import PlayerPanel from './components/playerPanel.vue'
+//import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div class="ms-nav">
+    <el-container>
+      <!-- 功能按钮 -->
+      <el-aside width="var(--ms-width-aside)">
+        <aside-panel></aside-panel>
+      </el-aside>
+      <!-- main页面 -->
+      <el-main id="nav_main" class="ms-main">
+        <router-view v-slot="{ Component }">
+          <transition name="fades" appear>
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </el-main>
+    </el-container>
+    <system-button></system-button>
+    <player-panel></player-panel>
+  </div>
 </template>
 
 <style>
@@ -16,6 +34,5 @@ import HelloWorld from './components/HelloWorld.vue'
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

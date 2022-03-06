@@ -1,0 +1,60 @@
+:root {
+  --ms-bottom-player: 0.9375rem;
+  --ms-height: 100vh;
+  --ms-height-system-buttom: 3.125rem;
+  --ms-height-player: 5rem;
+  --ms-width: 100vw;
+  --ms-width-avatar:3.125rem;
+  --ms-width-aside: 12.5rem;
+  --ms-width-player: 21.4375rem;
+  --ms-width-system-buttom: calc(var(--ms-width) - var(--ms-width-aside));
+  --ms-color-A: linear-gradient(269.69deg, #efefef 81.58%, rgba(255, 255, 255, 0.8) 99.71%);
+  --ms-color-B: rgba(255, 255, 255, 0.64);
+  --ms-color-C: #bff;
+  --ms-font-size-A: 0.5rem;
+  --ms-font-size-B: 0.625rem;
+  --ms-font-size-C: 0.75rem;
+  --ms-font-size-D: 0.875rem;
+  --ms-font-size-E: 1.125rem;
+  --ms-font-size-F: 1.375rem;
+  
+}
+
+
+body {
+  margin: 0;
+}
+.ms-nav {
+  background: var(--ms-color-A);
+  position: relative;
+}
+.ms-aside {
+  height: var(--ms-height);
+  background-color: var(--ms-color-B);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.ms-main {
+  margin: 0;
+  padding: 0;
+}
+.ms-system-button {
+  left: var(--ms-width-aside);
+  top: 0;
+  height: var(--ms-height-system-buttom);
+  width: var(--ms-width-system-buttom);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.ms-player {
+  bottom: var(--ms-bottom-player);
+  right: 0;
+  height: var(--ms-height-player);
+  width: var(--ms-width-player);
+  position: absolute;
+}
