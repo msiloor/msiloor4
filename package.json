@@ -1,0 +1,47 @@
+{
+  "name": "msiloor",
+  "private": true,
+  "version": "4.0.0",
+  "author": "昕羽",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "electron": "cross-env NODE_ENV=development electron .",
+    "electron:serve": "concurrently -k \"yarn dev\" \"yarn electron\"",
+    "electron:build": "vite build && electron-builder"
+  },
+  "build": {
+    "appId": "com.msiloor.music",
+    "productName": "梦聆音乐",
+    "copyright": "Copyright © 2021 msiloor",
+    "mac": {
+      "category": "public.msiloor.music"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist_electron"
+    }
+  },
+  "dependencies": {
+    "vue": "^3.2.25"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.0",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^17.1.0",
+    "electron-builder": "^22.14.13",
+    "vite": "^2.8.0",
+    "wait-on": "^6.0.1"
+  }
+}
