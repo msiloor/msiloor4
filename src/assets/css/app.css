@@ -23,6 +23,7 @@
 
 body {
   margin: 0;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .ms-nav {
   background: var(--ms-color-A);
@@ -35,6 +36,8 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
   -webkit-app-region: drag;
 }
 .ms-main {
@@ -51,7 +54,6 @@ body {
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
- 
 }
 .ms-player {
   bottom: var(--ms-bottom-player);

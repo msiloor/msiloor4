@@ -6,30 +6,30 @@ const path = require('path')
 
 const NODE_ENV = process.env.NODE_ENV
 
-function createWindow () {
+function createWindow() {
   // 创建浏览器窗口
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
     },
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: '#2f3241',
+      symbolColor: '#74b1be'
+    },
+    trafficLightPosition: { x: 10, y: 10 }
   })
 
   // 加载 index.html
   // mainWindow.loadFile('dist/index.html') 将该行改为下面这一行，加载url
-  mainWindow.loadURL(
-    NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      :`file://${path.join(__dirname, '../dist/index.html')}`
-  );
+  mainWindow.loadURL(NODE_ENV === 'development' ? 'http://localhost:3000' : `file://${path.join(__dirname, '../dist/index.html')}`)
 
   // 打开开发工具
-  if (NODE_ENV === "development") {
+  if (NODE_ENV === 'development') {
     mainWindow.webContents.openDevTools()
   }
-
 }
 
 // 这段程序将会在 Electron 结束初始化

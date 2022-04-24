@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import './assets/css/app.css'
 import AsidePanel from './components/asidePanel.vue'
 import SystemButton from './components/systemButton.vue'

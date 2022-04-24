@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import '../assets/css/app.css'
 import { ref } from 'vue'
 
