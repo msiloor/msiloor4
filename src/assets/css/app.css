@@ -35,6 +35,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  -webkit-app-region: drag;
 }
 .ms-main {
   margin: 0;
@@ -50,6 +51,7 @@ body {
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+ 
 }
 .ms-player {
   bottom: var(--ms-bottom-player);

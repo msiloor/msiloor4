@@ -13,7 +13,8 @@ function createWindow () {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    titleBarStyle: 'hidden'
   })
 
   // 加载 index.html

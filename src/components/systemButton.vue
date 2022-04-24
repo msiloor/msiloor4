@@ -1,6 +1,7 @@
 <script setup>
 import '../assets/css/app.css'
 import { ref } from 'vue'
+import { Back, Search } from '@element-plus/icons-vue'
 
 defineProps({
   msg: String,
@@ -12,8 +13,12 @@ const count = ref(0)
 <template>
   <div class="ms-system-button">
     <div class="l">
-      <div class="return">返回</div>
-      <div class="search">搜索</div>
+      <div class="return">
+        <el-icon style="font-size: 1.25rem"><back /></el-icon>
+      </div>
+      <div class="search">
+        <el-icon style="font-size: 0.9rem; margin-right: 5px"><search /></el-icon>搜索
+      </div>
     </div>
     <div class="r">
       <div>
@@ -38,6 +43,10 @@ const count = ref(0)
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
   border-radius: 0rem 2.5rem 2.5rem 0rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .search {
   width: 8.8125rem;
@@ -46,6 +55,14 @@ const count = ref(0)
   backdrop-filter: blur(2.8125rem);
   margin-left: 1rem;
   border-radius: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.625rem;
+  line-height: 0.625rem;
 }
 
 .r {
