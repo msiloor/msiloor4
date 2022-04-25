@@ -4,16 +4,21 @@ import { routes } from '../router'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Settings from '../svg/settings.vue'
+import Tabbar from './tabbar.vue'
 const route = useRoute()
 const router = useRouter()
 const selectUrl = ref('')
 defineProps({
   msg: String,
 })
+router.afterEach((to, from) => {
+  selectUrl.value = <string>to.name
+
+})
 
 function toPath(url: string, value: string) {
   router.push(url)
-  selectUrl.value = value
+  //selectUrl.value = value
 
 }
 
@@ -26,13 +31,13 @@ function toPath(url: string, value: string) {
     </div>
     <div class="control">
       <div class="title">在线音乐</div>
-      <div @click="router.push('/')">推荐</div>
-      <div @click="router.push('/music')">音乐馆</div>
-      <div @click="router.push('/radio')">电台</div>
+      <Tabbar :toPath="toPath" to="/" value="Home" :select="selectUrl">推荐</Tabbar>
+      <Tabbar :toPath="toPath" to="/music" value="Music" :select="selectUrl">音乐馆</Tabbar>
+      <Tabbar :toPath="toPath" to="/radio" value="Radio" :select="selectUrl">电台</Tabbar>
       <div class="title">我的音乐</div>
-      <div @click="router.push('/like')">我喜欢</div>
-      <div @click="router.push('/localFile')">本地音乐</div>
-      <div @click="router.push('/playList')">歌单列表</div>
+      <Tabbar :toPath="toPath" to="/like" value="Like" :select="selectUrl">我喜欢</Tabbar>
+      <Tabbar :toPath="toPath" to="/localFile" value="LocalFile" :select="selectUrl">本地音乐</Tabbar>
+      <Tabbar :toPath="toPath" to="/playList" value="PlayList" :select="selectUrl">歌单列表</Tabbar>
     </div>
     <div class="settings">
       <div style="margin-bottom: 2.5rem; line-height: 0">
@@ -42,7 +47,7 @@ function toPath(url: string, value: string) {
   </div>
 </template>
 
-<style scoped>
+<style >
 .avatar {
   max-height: var(--ms-width-aside);
   height: 30%;
@@ -56,8 +61,10 @@ function toPath(url: string, value: string) {
 
 .control {
   user-select: none;
-
 }
+
+
+
 
 .control>div {
   font-weight: 200;
@@ -71,19 +78,29 @@ function toPath(url: string, value: string) {
   padding: 0.5rem;
   margin: 0.25rem;
   border-radius: 12px;
-  transition: background-color 0.35s;
+  transition: background 0.35s, color 0.35s;
+
   -webkit-app-region: no-drag
 }
 
 .control>div:hover {
-  color: #dd5353;
+
   background: #e1dede52;
+  font-weight: 400;
 }
 
 .control>.router-link-exact-active {
   background: #ffc5c5;
   color: #fff;
+  font-weight: 400;
 }
+
+.control>.router-link-exact-active:hover {
+  background: #ffa3a3;
+  color: #fff;
+  font-weight: 400;
+}
+
 
 .control>.title {
   font-size: 0.9375rem;

@@ -1,12 +1,17 @@
 // electron/main.js
 
 // 控制应用生命周期和创建原生浏览器窗口的模组
-const { app, BrowserWindow } = require('electron')
+const { app, Tray, BrowserWindow } = require('electron')
 const path = require('path')
 
 const NODE_ENV = process.env.NODE_ENV
 
 function createWindow() {
+  console.log(`${path.join(__dirname,'../src/assets/icon/logo.png')}`);
+  const appIcon = new Tray(`${path.join(__dirname,'../src/assets/icon/logo.png')}`)
+  app.dock.bounce()
+  app.dock.setIcon(`${path.join(__dirname,'../src/assets/icon/logo.png')}`)
+
   // 创建浏览器窗口
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -14,12 +19,13 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
+    icon: '.\\logo.ico',
     titleBarStyle: 'hidden',
     titleBarOverlay: {
-      color: '#2f3241',
-      symbolColor: '#74b1be'
+      color: '#fff',
+      symbolColor: '#ffa3a3',
     },
-    trafficLightPosition: { x: 10, y: 10 }
+    trafficLightPosition: { x: 10, y: 10 },
   })
 
   // 加载 index.html

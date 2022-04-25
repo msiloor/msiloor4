@@ -4,7 +4,7 @@
   --ms-height-system-buttom: 3.125rem;
   --ms-height-player: 5rem;
   --ms-width: 100vw;
-  --ms-width-avatar:3.125rem;
+  --ms-width-avatar: 3.125rem;
   --ms-width-aside: 12.5rem;
   --ms-width-player: 21.4375rem;
   --ms-width-system-buttom: calc(var(--ms-width) - var(--ms-width-aside));
@@ -17,9 +17,7 @@
   --ms-font-size-D: 0.875rem;
   --ms-font-size-E: 1.125rem;
   --ms-font-size-F: 1.375rem;
-  
 }
-
 
 body {
   margin: 0;
@@ -43,6 +41,8 @@ body {
 .ms-main {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  overflow: auto;
 }
 .ms-system-button {
   left: var(--ms-width-aside);
