@@ -10,14 +10,15 @@
     "serve": "vite preview",
     "electron": "cross-env NODE_ENV=development electron .",
     "electron:serve": "concurrently -k \"yarn dev\" \"yarn electron\"",
-    "electron:build": "vite build && electron-builder"
+    "electron:build": "vite build &&cross-env PYTHON_PATH=python electron-builder"
   },
   "build": {
     "appId": "com.msiloor.music",
     "productName": "梦聆音乐",
     "copyright": "Copyright © 2021 msiloor",
     "mac": {
-      "category": "public.msiloor.music"
+      "category": "public.msiloor.music",
+      "icon": "public/icon/icon.png"
     },
     "nsis": {
       "oneClick": false,
@@ -43,6 +44,7 @@
     "cross-env": "^7.0.3",
     "electron": "^18.1.0",
     "electron-builder": "^22.14.13",
+    "electron-osx-sign": "^0.6.0",
     "vite": "^2.8.0",
     "wait-on": "^6.0.1"
   }
