@@ -33,7 +33,6 @@
     }
   },
   "dependencies": {
-    "bassaudio-updated": "^2.1.1",
     "element-plus": "^2.0.5",
     "vue": "^3.2.25",
     "vue-router": "4"
@@ -42,7 +41,7 @@
     "@vitejs/plugin-vue": "^2.2.0",
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
-    "electron": "^17.1.0",
+    "electron": "^18.1.0",
     "electron-builder": "^22.14.13",
     "vite": "^2.8.0",
     "wait-on": "^6.0.1"

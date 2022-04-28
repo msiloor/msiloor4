@@ -8,23 +8,20 @@ const NODE_ENV = process.env.NODE_ENV
 
 function createWindow() {
   console.log(`${path.join(__dirname,'../src/assets/icon/logo.png')}`);
-  const appIcon = new Tray(`${path.join(__dirname,'../src/assets/icon/logo.png')}`)
+  
   app.dock.bounce()
-  app.dock.setIcon(`${path.join(__dirname,'../src/assets/icon/logo.png')}`)
+  //app.dock.setIcon(`${path.join(__dirname,'../src/assets/icon/logo.png')}`)
 
   // 创建浏览器窗口
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
     icon: '.\\logo.ico',
     titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      color: '#fff',
-      symbolColor: '#ffa3a3',
-    },
+
     trafficLightPosition: { x: 10, y: 10 },
   })
 

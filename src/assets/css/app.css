@@ -61,4 +61,7 @@ body {
   height: var(--ms-height-player);
   width: var(--ms-width-player);
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
