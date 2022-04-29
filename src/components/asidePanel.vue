@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import Settings from '../svg/settings.vue'
 import Tabbar from './tabbar.vue'
+import ava from '../assets/avatar.webp'
 const route = useRoute()
 const router = useRouter()
 const selectUrl = ref('')
@@ -13,21 +14,18 @@ defineProps({
 })
 router.afterEach((to, from) => {
   selectUrl.value = <string>to.name
-
 })
 
 function toPath(url: string, value: string) {
   router.push(url)
   //selectUrl.value = value
-
 }
-
 </script>
 
 <template>
   <div class="ms-aside">
     <div class="avatar">
-      <el-avatar style="--el-avatar-size: var(--ms-width-avatar)"></el-avatar>
+      <el-avatar style="--el-avatar-size: var(--ms-width-avatar);-webkit-app-region: no-drag;" :src="ava"></el-avatar>
     </div>
     <div class="control">
       <div class="title">在线音乐</div>
@@ -47,7 +45,7 @@ function toPath(url: string, value: string) {
   </div>
 </template>
 
-<style >
+<style>
 .avatar {
   max-height: var(--ms-width-aside);
   height: 30%;
@@ -63,10 +61,7 @@ function toPath(url: string, value: string) {
   user-select: none;
 }
 
-
-
-
-.control>div {
+.control > div {
   font-weight: 200;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -78,31 +73,33 @@ function toPath(url: string, value: string) {
   padding: 0.5rem;
   margin: 0.25rem;
   border-radius: 12px;
-  transition: background 0.35s, color 0.35s;
-
-  -webkit-app-region: no-drag
+  transition: all 0.3s, background 0.35s, color 0.35s;
+  transform-origin: center;
+  -webkit-transform-origin: center;
+  -webkit-app-region: no-drag;
 }
 
-.control>div:hover {
-
+.control > div:hover {
   background: #e1dede52;
   font-weight: 400;
 }
-
-.control>.router-link-exact-active {
+.control > div:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+}
+.control > .router-link-exact-active {
   background: #ffc5c5;
   color: #fff;
   font-weight: 400;
 }
 
-.control>.router-link-exact-active:hover {
+.control > .router-link-exact-active:hover {
   background: #ffa3a3;
   color: #fff;
   font-weight: 400;
 }
 
-
-.control>.title {
+.control > .title {
   font-size: 0.9375rem;
   line-height: 0.75rem;
   color: #c3c1c1;
@@ -110,7 +107,10 @@ function toPath(url: string, value: string) {
   transform: scale(0.6);
   margin-bottom: 8px;
 }
-
+.control > .title:hover {
+  background: none;
+  font-weight: 400;
+}
 .settings {
   height: var(--ms-width-aside);
   display: flex;

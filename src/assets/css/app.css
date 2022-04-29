@@ -26,6 +26,7 @@ body {
 .ms-nav {
   background: var(--ms-color-A);
   position: relative;
+  overflow: hidden;
 }
 .ms-aside {
   height: var(--ms-height);
@@ -64,4 +65,23 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+svg {
+  transition: all 0.3s;
+  transform-origin: center;
+  -webkit-transform-origin: center;
+  -webkit-app-region: no-drag;
+}
+svg:hover {
+  color: #ffa3a3;
+}
+
+svg:active {
+  color: #ffc5c5;
+  transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+}
+.noSvg:active{
+  transform: none;
+  -webkit-transform:none;
 }

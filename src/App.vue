@@ -15,11 +15,13 @@ import PlayerPanel from './components/playerPanel.vue'
       </el-aside>
       <!-- main页面 -->
       <el-main id="nav_main" class="ms-main">
-        <router-view v-slot="{ Component }">
-          <transition name="fades" appear>
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <el-scrollbar>
+          <router-view v-slot="{ Component }">
+            <transition name="fades" appear>
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </el-scrollbar>
       </el-main>
     </el-container>
     <system-button></system-button>

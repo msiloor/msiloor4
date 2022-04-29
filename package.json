@@ -10,7 +10,7 @@
     "serve": "vite preview",
     "electron": "cross-env NODE_ENV=development electron .",
     "electron:serve": "concurrently -k \"yarn dev\" \"yarn electron\"",
-    "electron:build": "vite build &&cross-env PYTHON_PATH=python electron-builder"
+    "electron:build": "vite build &&cross-env PYTHON_PATH=python2 electron-builder"
   },
   "build": {
     "appId": "com.msiloor.music",
