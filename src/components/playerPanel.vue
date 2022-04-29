@@ -3,9 +3,9 @@
     <transition name="musicList">
       <div ref="musicList" class="musicList" @mousewheel="mousewheelS" tabindex="0" @blur="closeMusicList" v-if="musicListShow">
         <el-scrollbar wrap-class="sm" @scroll="Scrollbar" view-style="padding:10px 0" max-height="calc(100vh - 4.5rem - 5rem)">
-          <div class="musicListItem" v-for="item in 100">
-            <div><b>歌曲名 - </b>歌手</div>
-            <div class="delMusicListItem">
+          <div class="musicListItem" v-for="item in musicListData">
+            <div><b>{{item.song}} - </b>{{item.singer}}</div>
+            <div class="delMusicListItem" @click="">
               <el-icon><circle-close-filled /></el-icon>
             </div>
           </div>
@@ -30,6 +30,7 @@
 </template>
 <script setup lang="ts">
 import '../assets/css/app.css'
+import { CircleCloseFilled } from '@element-plus/icons-vue'
 import { nextTick, ref } from 'vue'
 import Right from '../svg/right.vue'
 import Left from '../svg/left.vue'
@@ -40,6 +41,15 @@ import PlayListMenu from '../svg/playListMenu.vue'
 defineProps({
   msg: String,
 })
+
+const musicListData = ref([
+  {
+    song: '稻香',
+    singer: '周杰伦',
+    album: '',
+    url: 'https://www.ytmp3.cn/down/46383.mp3',
+  },
+])
 
 const count = ref(0)
 const musicList = ref()
@@ -289,6 +299,7 @@ function mousewheelS(res: any) {
   background-color: #ffa3a3;
   color: rgb(255, 255, 255);
   transform: scale(1.1);
+  font-size: 0.75rem;
 }
 .musicListItem:active {
   transform: scale(1);
@@ -300,8 +311,14 @@ function mousewheelS(res: any) {
   -webkit-transform-origin: center;
   transition: all 0.3s;
   color: rgb(255, 255, 255);
+  font-size: 0.75rem;
 }
 .musicListItem:hover > .delMusicListItem {
   display: block;
+}
+
+.delMusicListItem svg:hover {
+  color: rgb(255, 255, 255);
+  transform: scale(1.2);
 }
 </style>
