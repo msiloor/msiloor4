@@ -4,6 +4,15 @@ import AsidePanel from './components/asidePanel.vue'
 import SystemButton from './components/systemButton.vue'
 import PlayerPanel from './components/playerPanel.vue'
 //import HelloWorld from './components/HelloWorld.vue'
+import { useAudioPlayStore } from './global/play'
+import { ref } from 'vue'
+const Audio = ref() //主音频
+
+const AudioPlayStore = useAudioPlayStore()
+const { bindAudioObj } = AudioPlayStore
+bindAudioObj(Audio)
+
+const refss = ref()
 </script>
 
 <template>
@@ -21,11 +30,13 @@ import PlayerPanel from './components/playerPanel.vue'
               <component :is="Component" />
             </transition>
           </router-view>
+          {{ refss }}
         </el-scrollbar>
       </el-main>
     </el-container>
     <system-button></system-button>
     <player-panel></player-panel>
+    <audio ref="Audio" :currentTime="refss" :src="AudioPlayStore.AudioPlayInfo?.url"></audio>
   </div>
 </template>
 

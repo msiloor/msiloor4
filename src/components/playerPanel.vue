@@ -3,8 +3,10 @@
     <transition name="musicList">
       <div ref="musicList" class="musicList" @mousewheel="mousewheelS" tabindex="0" @blur="closeMusicList" v-if="musicListShow">
         <el-scrollbar wrap-class="sm" @scroll="Scrollbar" view-style="padding:10px 0" max-height="calc(100vh - 4.5rem - 5rem)">
-          <div class="musicListItem" v-for="item in musicListData">
-            <div><b>{{item.song}} - </b>{{item.singer}}</div>
+          <div class="musicListItem" v-for="item in AudioPlayStore.playList">
+            <div>
+              <b>{{ item.song }} - </b>{{ item.singer }}
+            </div>
             <div class="delMusicListItem" @click="">
               <el-icon><circle-close-filled /></el-icon>
             </div>
@@ -22,9 +24,9 @@
       <div><Right /></div>
       <div class="play">
         <div><Logo class="noSvg" /></div>
-        <div v-if="false"><Play /></div>
+        <div @click="playMusic" class="playbutton"><Stop v-if="AudioPlayStore.AudioPlayState == 'play'" /> <Play v-else /></div>
       </div>
-      <div><Left /></div>
+      <div @click="nextMusic"><Left /></div>
     </div>
   </div>
 </template>
@@ -37,21 +39,16 @@ import Left from '../svg/left.vue'
 import Logo from '../svg/logo.vue'
 import Play from '../svg/play.vue'
 import PlayListMenu from '../svg/playListMenu.vue'
+import music from '../assets/音乐.mp3'
+import { useAudioPlayStore } from '../global/play'
+import Stop from '../svg/stop.vue'
+const AudioPlayStore = useAudioPlayStore()
 
 defineProps({
   msg: String,
 })
 
-const musicListData = ref([
-  {
-    song: '稻香',
-    singer: '周杰伦',
-    album: '',
-    url: 'https://www.ytmp3.cn/down/46383.mp3',
-  },
-])
-
-const count = ref(0)
+/** 播放列表div */
 const musicList = ref()
 const musicListShow = ref(false)
 const musicListShowLook = ref(false)
@@ -118,6 +115,7 @@ function mousewheel(res: any, t?: boolean) {
     }
   }
 }
+
 let isTop = true
 function Scrollbar(res: any) {
   if (res.scrollTop == 0) {
@@ -135,6 +133,30 @@ function mousewheelS(res: any) {
     if (da == 'b') {
       closeMusicList()
     }
+  }
+}
+
+function nextMusic() {
+  console.log(AudioPlayStore.play())
+}
+function playMusic() {
+  console.log(AudioPlayStore.AudioPlayState)
+
+  if (AudioPlayStore.AudioPlayState == 'play') {
+    AudioPlayStore.stop()
+  } else {
+    AudioPlayStore.AudioPlayInfo = {
+      song: '稻香',
+      singer: [{ name: '周杰伦', id: '', img: '' }],
+      album: [],
+      url: music,
+      defUrl: 0,
+      path: '',
+      id: '',
+    }
+    nextTick(() => {
+      AudioPlayStore.play()
+    })
   }
 }
 </script>
@@ -266,8 +288,8 @@ function mousewheelS(res: any) {
 @keyframes musiclistshow {
   0% {
     opacity: 0;
-    transform: scale(0.9) translateY(5rem);
-    -webkit-transform: scale(0.9) translateY(5rem);
+    transform: scale(0.9) translateY(4rem);
+    -webkit-transform: scale(0.9) translateY(4rem);
   }
   25% {
     opacity: 1;
@@ -320,5 +342,13 @@ function mousewheelS(res: any) {
 .delMusicListItem svg:hover {
   color: rgb(255, 255, 255);
   transform: scale(1.2);
+}
+
+.playbutton > svg:hover {
+  color: rgb(255, 255, 255);
+  transform: scale(1.2);
+}
+.playbutton > svg:active {
+  transform: scale(00.875rem);
 }
 </style>
