@@ -6,6 +6,7 @@ import PlayerPanel from './components/playerPanel.vue'
 //import HelloWorld from './components/HelloWorld.vue'
 import { useAudioPlayStore } from './global/play'
 import { ref } from 'vue'
+import PlayPage from './components/playPage.vue'
 const Audio = ref() //主音频
 
 const AudioPlayStore = useAudioPlayStore()
@@ -38,6 +39,7 @@ const refss = ref()
     <player-panel></player-panel>
     <audio ref="Audio" :currentTime="refss" :src="AudioPlayStore.AudioPlayInfo?.url"></audio>
   </div>
+  <play-page />
 </template>
 
 <style>

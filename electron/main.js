@@ -56,7 +56,6 @@ function createWindow() {
       scrollBounce: true,
     },
     titleBarStyle: 'hidden',
-
     trafficLightPosition: { x: 10, y: 10 },
   })
 

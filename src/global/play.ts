@@ -38,6 +38,7 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
   const AudioPlayState = ref<'play' | 'stop'>('stop')
   const AudioPlayDuration = ref(0)
   const AudioPlayProgress = ref(0)
+  const AudioPlayperCentage = ref(0)
   /** 播放信息 */
   const AudioPlayInfo = ref<AudoPlayListItem>()
   /** 播放列表-当前歌曲 */
@@ -53,7 +54,7 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
   var gainNode = audioCtx.value.createGain()
   var finish = audioCtx.value.destination*/
   const TimeRe = ref<NodeJS.Timer>()
-  const fps = ref(100)
+  const fps = ref(1000)
   async function runTimeRe() {
     if (TimeRe.value) await stopTimeRe()
     TimeRe.value = setInterval(TimeReFun, fps.value)
@@ -68,7 +69,8 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
   async function TimeReFun() {
     //console.log(AudioObj.value.duration, AudioObj.value.currentTime)
     AudioPlayProgress.value = AudioObj.value.currentTime
-
+    AudioPlayDuration.value = AudioObj.value.duration
+    AudioPlayperCentage.value = Number((Number(AudioPlayProgress.value.toFixed(4)) / Number(AudioPlayDuration.value.toFixed(4))).toFixed(4)) * 100
     if (AudioObj.value.duration == AudioObj.value.currentTime) {
       playNext()
     }
@@ -80,7 +82,6 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
 
     if (AudioObj.value.paused) {
     } else {
-      AudioPlayDuration.value = AudioObj.value.duration
       runTimeRe()
       AudioPlayState.value = 'play'
     }
@@ -114,7 +115,7 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
         playListAlready.value.push(playListIndex.value)
       }
     } else playListAlready.value.push(playListIndex.value)
-    
+
     playListIndex.value = index
     if (AudioPlayInfo.value?.url == playList.value[index].url) {
       AudioObj.value.currentTime = 0
@@ -184,6 +185,7 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
     AudioPlayInfo,
     AudioPlayState,
     AudioPlayDuration,
-    AudioPlayProgress
+    AudioPlayProgress,
+    AudioPlayperCentage
   }
 })

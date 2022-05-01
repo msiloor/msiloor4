@@ -14,25 +14,26 @@
         </el-scrollbar>
       </div>
     </transition>
-    <div class="a1" @mousewheel="mousewheel" >
-      <div @click="listclick">
+    <div class="a1" @mousewheel="mousewheel" @click="listclick" :style="`background: linear-gradient(90deg, rgba(213, 213, 213, 0.32) 0%, rgba(213, 213, 213, 0.32) ${AudioPlayStore.AudioPlayperCentage - 15}%, rgba(255, 255, 255, 0.64) ${AudioPlayStore.AudioPlayperCentage}%, rgba(255, 255, 255, 0.64) 100%);`">
+      <div>
         <PlayListMenu />
       </div>
       <div v-if="!AudioPlayStore.AudioPlayInfo"><b>歌曲名 - </b>歌手</div>
       <div v-else>
-        <b> {{AudioPlayStore.AudioPlayProgress}}:{{ AudioPlayStore.AudioPlayInfo.song }} - </b>{{ AudioPlayStore.AudioPlayInfo.singer[0].name }}
+        <b>{{ AudioPlayStore.AudioPlayInfo.song }} - </b>{{ AudioPlayStore.AudioPlayInfo.singer[0].name }}
       </div>
     </div>
     <div class="a2" @mousewheel="mousewheel">
       <div @click="AudioPlayStore.playLast()"><Right /></div>
       <div class="play">
         <div v-if="!AudioPlayStore.AudioPlayInfo"><Logo class="noSvg" /></div>
-        <div v-else><el-avatar style="--el-avatar-size: 5rem;-webkit-app-region: no-drag;"  :src="AudioPlayStore.AudioPlayInfo.img" /></div>
+        <div v-else class="playAvatar" :style="`background-image: url(${AudioPlayStore.AudioPlayInfo.img});`"></div>
         <div v-if="AudioPlayStore.AudioPlayInfo" @click="playMusic" class="playbutton"><Stop v-if="AudioPlayStore.AudioPlayState == 'play'" /> <Play v-else /></div>
       </div>
       <div @click="AudioPlayStore.playNext()"><Left /></div>
     </div>
   </div>
+
 </template>
 <script setup lang="ts">
 import '../assets/css/app.css'
@@ -46,9 +47,11 @@ import PlayListMenu from '../svg/playListMenu.vue'
 import { useAudioPlayStore } from '../global/play'
 import Stop from '../svg/stop.vue'
 
+
 import music2 from '../assets/音乐.mp3'
 import music from '../assets/周杰伦 - 稻香 [mqms2].flac'
 import imgTest from '../assets/logo.png'
+
 const AudioPlayStore = useAudioPlayStore()
 
 defineProps({
@@ -156,13 +159,13 @@ AudioPlayStore.playListAdd({
   song: '稻香',
   singer: [{ name: '周杰伦' }],
   url: music,
-  img: imgTest,
+  img: 'https://y.qq.com/music/photo_new/T001R300x300M0000025NhlN2yWrP4.jpg?max_age=2592000',
 })
 AudioPlayStore.playListAdd({
   song: '一首想不通的古风',
   singer: [{ name: '贰婶' }],
   url: music2,
-  img: imgTest,
+  img: 'https://t14.baidu.com/it/u=2759726098,451976478&fm=179&app=42&size=w931&n=0&f=JPEG&fmt=auto?s=3B8A70235A33728C68095DE20100E0A1&sec=1651597200&t=20d0ca4595ccaed7f1881038846c2b39',
 })
 </script>
 <style scoped>
@@ -194,7 +197,9 @@ AudioPlayStore.playListAdd({
 
   color: #585858;
 }
-
+.a1 > div:nth-child(2) > text {
+  transition: all 0.3s;
+}
 .a1 > div:nth-child(2) > b {
   font-weight: 700;
   font-size: 0.875rem;
@@ -241,6 +246,7 @@ AudioPlayStore.playListAdd({
 
 .play > div {
   position: absolute;
+  user-select: none;
 }
 
 .play > div:nth-child(1) {
@@ -355,5 +361,18 @@ AudioPlayStore.playListAdd({
 }
 .playbutton > svg:active {
   transform: scale(00.875rem);
+}
+.playAvatar {
+  transition: all 0.25s;
+  width: 5rem;
+  height: 5rem;
+  background-size: auto 100%;
+  background-position: center center;
+}
+.playAvatar:hover {
+  transform: scale(1.1);
+}
+.playAvatar:active {
+  transform: scale(1.1) translateY(5%);
 }
 </style>

@@ -65,6 +65,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 1s, width 0.3s;
+  transform-origin: center;
+  -webkit-transform-origin: center;
+}
+.ms-player:hover {
+  width: calc(var(--ms-width-player) + 3rem);
 }
 svg {
   transition: all 0.3s;
@@ -81,7 +87,7 @@ svg:active {
   transform: scale(0.8);
   -webkit-transform: scale(0.8);
 }
-.noSvg:active{
+.noSvg:active {
   transform: none;
-  -webkit-transform:none;
+  -webkit-transform: none;
 }
