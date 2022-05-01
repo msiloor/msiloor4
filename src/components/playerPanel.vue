@@ -3,30 +3,34 @@
     <transition name="musicList">
       <div ref="musicList" class="musicList" @mousewheel="mousewheelS" tabindex="0" @blur="closeMusicList" v-if="musicListShow">
         <el-scrollbar wrap-class="sm" @scroll="Scrollbar" view-style="padding:10px 0" max-height="calc(100vh - 4.5rem - 5rem)">
-          <div class="musicListItem" v-for="item in AudioPlayStore.playList">
+          <div class="musicListItem" v-for="(item, index) in AudioPlayStore.playList" :key="index" @click="AudioPlayStore.playInList(index)">
             <div>
-              <b>{{ item.song }} - </b>{{ item.singer }}
+              <b>{{ item.song }} - </b>{{ item.singer[0].name }}
             </div>
-            <div class="delMusicListItem" @click="">
+            <div class="delMusicListItem" @click="AudioPlayStore.playListDel(index)">
               <el-icon><circle-close-filled /></el-icon>
             </div>
           </div>
         </el-scrollbar>
       </div>
     </transition>
-    <div class="a1" @mousewheel="mousewheel">
+    <div class="a1" @mousewheel="mousewheel" >
       <div @click="listclick">
         <PlayListMenu />
       </div>
-      <div><b>歌曲名 - </b>歌手</div>
+      <div v-if="!AudioPlayStore.AudioPlayInfo"><b>歌曲名 - </b>歌手</div>
+      <div v-else>
+        <b> {{AudioPlayStore.AudioPlayProgress}}:{{ AudioPlayStore.AudioPlayInfo.song }} - </b>{{ AudioPlayStore.AudioPlayInfo.singer[0].name }}
+      </div>
     </div>
     <div class="a2" @mousewheel="mousewheel">
-      <div><Right /></div>
+      <div @click="AudioPlayStore.playLast()"><Right /></div>
       <div class="play">
-        <div><Logo class="noSvg" /></div>
-        <div @click="playMusic" class="playbutton"><Stop v-if="AudioPlayStore.AudioPlayState == 'play'" /> <Play v-else /></div>
+        <div v-if="!AudioPlayStore.AudioPlayInfo"><Logo class="noSvg" /></div>
+        <div v-else><el-avatar style="--el-avatar-size: 5rem;-webkit-app-region: no-drag;"  :src="AudioPlayStore.AudioPlayInfo.img" /></div>
+        <div v-if="AudioPlayStore.AudioPlayInfo" @click="playMusic" class="playbutton"><Stop v-if="AudioPlayStore.AudioPlayState == 'play'" /> <Play v-else /></div>
       </div>
-      <div @click="nextMusic"><Left /></div>
+      <div @click="AudioPlayStore.playNext()"><Left /></div>
     </div>
   </div>
 </template>
@@ -39,9 +43,12 @@ import Left from '../svg/left.vue'
 import Logo from '../svg/logo.vue'
 import Play from '../svg/play.vue'
 import PlayListMenu from '../svg/playListMenu.vue'
-import music from '../assets/音乐.mp3'
 import { useAudioPlayStore } from '../global/play'
 import Stop from '../svg/stop.vue'
+
+import music2 from '../assets/音乐.mp3'
+import music from '../assets/周杰伦 - 稻香 [mqms2].flac'
+import imgTest from '../assets/logo.png'
 const AudioPlayStore = useAudioPlayStore()
 
 defineProps({
@@ -104,9 +111,11 @@ function mousewheel(res: any, t?: boolean) {
         if (x == 1) {
           if (t) return 'c'
           console.log('下一曲')
+          AudioPlayStore.playNext()
         } else if (x == 2) {
           if (t) return 'd'
           console.log('上一曲')
+          AudioPlayStore.playLast()
         }
       }
     } else {
@@ -136,29 +145,25 @@ function mousewheelS(res: any) {
   }
 }
 
-function nextMusic() {
-  console.log(AudioPlayStore.play())
-}
 function playMusic() {
-  console.log(AudioPlayStore.AudioPlayState)
-
   if (AudioPlayStore.AudioPlayState == 'play') {
     AudioPlayStore.stop()
   } else {
-    AudioPlayStore.AudioPlayInfo = {
-      song: '稻香',
-      singer: [{ name: '周杰伦', id: '', img: '' }],
-      album: [],
-      url: music,
-      defUrl: 0,
-      path: '',
-      id: '',
-    }
-    nextTick(() => {
-      AudioPlayStore.play()
-    })
+    AudioPlayStore.play()
   }
 }
+AudioPlayStore.playListAdd({
+  song: '稻香',
+  singer: [{ name: '周杰伦' }],
+  url: music,
+  img: imgTest,
+})
+AudioPlayStore.playListAdd({
+  song: '一首想不通的古风',
+  singer: [{ name: '贰婶' }],
+  url: music2,
+  img: imgTest,
+})
 </script>
 <style scoped>
 .a1 {
