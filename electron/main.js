@@ -55,6 +55,9 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       scrollBounce: true,
     },
+    webPreferences: {
+      webSecurity: false,
+    },
     titleBarStyle: 'hidden',
     trafficLightPosition: { x: 10, y: 10 },
   })

@@ -14,7 +14,7 @@
         </el-scrollbar>
       </div>
     </transition>
-    <div class="a1" @mousewheel="mousewheel" @click="listclick" :style="`background: linear-gradient(90deg, rgba(213, 213, 213, 0.32) 0%, rgba(213, 213, 213, 0.32) ${AudioPlayStore.AudioPlayperCentage - 15}%, rgba(255, 255, 255, 0.64) ${AudioPlayStore.AudioPlayperCentage}%, rgba(255, 255, 255, 0.64) 100%);`">
+    <div class="a1" @mousewheel="mousewheel" @click="listclick" :style="`background: linear-gradient(75deg, rgba(213, 213, 213, 0.32) 0%, rgba(213, 213, 213, 0.32) ${AudioPlayStore.AudioPlayperCentage - 15}%, rgba(255, 255, 255, 0.64) ${AudioPlayStore.AudioPlayperCentage}%, rgba(255, 255, 255, 0.64) 100%);`">
       <div>
         <PlayListMenu />
       </div>
@@ -26,14 +26,13 @@
     <div class="a2" @mousewheel="mousewheel">
       <div @click="AudioPlayStore.playLast()"><Right /></div>
       <div class="play">
-        <div v-if="!AudioPlayStore.AudioPlayInfo"><Logo class="noSvg" /></div>
-        <div v-else class="playAvatar" :style="`background-image: url(${AudioPlayStore.AudioPlayInfo.img});`"></div>
+        <div v-if="!AudioPlayStore.AudioPlayInfo" ><Logo class="noSvg" /></div>
+        <div v-else @click="AudioPlayStore.playPage = true" class="playAvatar" :style="`background-image: url(${AudioPlayStore.AudioPlayInfo.img});`"></div>
         <div v-if="AudioPlayStore.AudioPlayInfo" @click="playMusic" class="playbutton"><Stop v-if="AudioPlayStore.AudioPlayState == 'play'" /> <Play v-else /></div>
       </div>
       <div @click="AudioPlayStore.playNext()"><Left /></div>
     </div>
   </div>
-
 </template>
 <script setup lang="ts">
 import '../assets/css/app.css'
@@ -46,7 +45,6 @@ import Play from '../svg/play.vue'
 import PlayListMenu from '../svg/playListMenu.vue'
 import { useAudioPlayStore } from '../global/play'
 import Stop from '../svg/stop.vue'
-
 
 import music2 from '../assets/音乐.mp3'
 import music from '../assets/周杰伦 - 稻香 [mqms2].flac'
@@ -175,6 +173,7 @@ AudioPlayStore.playListAdd({
   height: 2.8125rem;
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   border-radius: 2.8125rem 0px 0px 2.8125rem;
   display: flex;
   flex-direction: row;
@@ -229,6 +228,7 @@ AudioPlayStore.playListAdd({
   border-radius: 5rem;
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   box-shadow: 0px 0.25rem 2.8125rem rgba(0, 0, 0, 0.25);
   overflow: hidden;
   display: flex;
@@ -266,6 +266,7 @@ AudioPlayStore.playListAdd({
   width: calc(100% - 0.3125rem);
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   height: auto;
   min-height: 10vh;
   max-height: calc(100vh - 4.5rem - 5rem);

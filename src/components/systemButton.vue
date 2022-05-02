@@ -109,6 +109,7 @@ restaurants.value = [
   width: var(--ms-height-system-buttom);
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   border-radius: 0rem 2.5rem 2.5rem 0rem;
   display: flex;
   justify-content: center;
@@ -120,6 +121,7 @@ restaurants.value = [
   height: 2.1875rem;
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   margin-left: 1rem;
   border-radius: 2.5rem;
   display: flex;
@@ -155,6 +157,7 @@ restaurants.value = [
   position: absolute;
   background: rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   border-radius: 2.8125rem 0rem 0rem 7.5rem;
   padding-left: 1rem;
 }
@@ -175,6 +178,8 @@ restaurants.value = [
   background: #ffffffcf;
   border: 0px solid var(--el-border-color-light);
   box-shadow: var(--el-box-shadow-light);
+  backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
   border-radius: 10px;
   font-family: auto;
 }

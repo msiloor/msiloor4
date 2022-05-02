@@ -1,6 +1,7 @@
 import { da } from 'element-plus/lib/locale'
 import { defineStore } from 'pinia'
 import { nextTick, Ref, ref } from 'vue'
+import { getImageMeanColor } from '../lib/img'
 
 export interface singerInfo {
   name: string
@@ -41,15 +42,17 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
   const AudioPlayperCentage = ref(0)
   /** 播放信息 */
   const AudioPlayInfo = ref<AudoPlayListItem>()
+  const AudioPlayColor = ref<{ rgba: string; hsla: string; r: number; g: number; b: number; a: number; h: number; s: number; l: number }>()
   /** 播放列表-当前歌曲 */
   const playListIndex = ref<number>(0)
   /** 播放列表 */
   const playList = ref<Array<AudoPlayListItem>>([])
   const playNextType = ref<'OrderPlay' | 'Repeat' | 'Shuffle'>('OrderPlay')
   const playListAlready = ref<Array<number>>([])
+  const playPage = ref(false)
   /*var AudioContext = window.AudioContext
   const audioCtx = ref(new AudioContext())
-
+  
   var oscillatorNode = audioCtx.value.createOscillator()
   var gainNode = audioCtx.value.createGain()
   var finish = audioCtx.value.destination*/
@@ -99,6 +102,15 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
     }
     if (addList) playList.value.push(data)
     AudioPlayInfo.value = data
+    if (AudioPlayInfo.value.img) {
+      getImageMeanColor({
+        imageUrl: AudioPlayInfo.value.img,
+        cb: (rgba: string, hsla: string, r: number, g: number, b: number, a: number, h: number, s: number, l: number) => {
+          AudioPlayColor.value = { rgba, hsla, r, g, b, a, h, s, l }
+          console.log('颜色', AudioPlayColor.value)
+        },
+      })
+    }
     nextTick(() => {
       play()
     })
@@ -122,7 +134,18 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
       play()
       return
     }
+
     AudioPlayInfo.value = playList.value[index]
+    if (AudioPlayInfo.value.img) {
+      getImageMeanColor({
+        imageUrl: AudioPlayInfo.value.img,
+        cb: (rgba: string, hsla: string, r: number, g: number, b: number, a: number, h: number, s: number, l: number) => {
+          AudioPlayColor.value = { rgba, hsla, r, g, b, a, h, s, l }
+          console.log('颜色', AudioPlayColor.value)
+        },
+      })
+    }
+
     nextTick(() => {
       play()
     })
@@ -170,7 +193,9 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
     if (index < playListIndex.value) playListIndex.value - 1
     playList.value.splice(index, 1)
   }
-
+  function setCurrentTime(t: any) {
+    AudioObj.value.currentTime = t
+  }
   return {
     bindAudioObj,
     stop,
@@ -181,11 +206,14 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
     playListAdd,
     playLast,
     playNext,
+    setCurrentTime,
     playList,
+    playPage,
     AudioPlayInfo,
+    AudioPlayColor,
     AudioPlayState,
     AudioPlayDuration,
     AudioPlayProgress,
-    AudioPlayperCentage
+    AudioPlayperCentage,
   }
 })
