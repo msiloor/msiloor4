@@ -11,18 +11,36 @@
             <div @click="playMusic"><Stop v-if="AudioPlayStore.AudioPlayState == 'play'" color="white" style="width: 1.5625rem" /><Play v-else style="width: 1.5625rem" /></div>
             <div @click="AudioPlayStore.playNext()"><Left style="width: 1rem; margin-right: 0.1875rem" /></div>
             <div><PlayListMenu color="white" /></div>
+            <transition name="musicList">
+              <div ref="musicList" class="musicList" tabindex="0">
+                <el-scrollbar wrap-class="sm" view-style="padding:10px 0" max-height="calc(100vh - 4.5rem - 5rem)">
+                  <div class="musicListItem" v-for="(item, index) in AudioPlayStore.playList" :key="index" @click="AudioPlayStore.playInList(index)">
+                    <div>
+                      <b>{{ item.song }} - </b>{{ item.singer[0].name }}
+                    </div>
+                    <div class="delMusicListItem" @click="AudioPlayStore.playListDel(index)">
+                      <el-icon><circle-close-filled /></el-icon>
+                    </div>
+                  </div>
+                </el-scrollbar>
+              </div>
+            </transition>
           </div>
         </div>
-        <div>歌词</div>
+        <div>
+          <div>尚未发现歌词</div>
+        </div>
       </div>
       <div class="fo">
-        <div>左按钮区域</div>
-        <div><el-slider @change="change" v-model="AudioPlayStore.AudioPlayperCentage" /></div>
-        <div>右控制区域</div>
+        <div></div>
+        <div>
+          <el-slider :max="AudioPlayStore.AudioPlayDuration" :min="0" class="bar" :style="`--el-slider-main-bg-color: ${AudioPlayStore.AudioPlayColor?.rgba};--el-slider-runway-bg-color: rgba(${AudioPlayStore.AudioPlayColor.r},${AudioPlayStore.AudioPlayColor.g},${AudioPlayStore.AudioPlayColor.b},0.3);`" @change="change" v-model="AudioPlayStore.AudioPlayProgress" :format-tooltip="formatTooltip" />
+        </div>
+        <div></div>
       </div>
     </div>
     <div class="head">
-      <div>控制按钮</div>
+      <div></div>
       <div>
         <div>{{ AudioPlayStore.AudioPlayInfo?.song }}</div>
         <div>{{ AudioPlayStore.AudioPlayInfo.singer[0].name }}</div>
@@ -47,8 +65,7 @@ function playMusic() {
   }
 }
 function change(val: any) {
-  console.log(val)
-  AudioPlayStore.setCurrentTime((val / 100) * AudioPlayStore.AudioPlayDuration)
+  AudioPlayStore.setCurrentTime(val)
 }
 let xG = 0
 let yG = 0
@@ -89,6 +106,18 @@ function mousewheel(res: any, t?: boolean) {
     }
   }
 }
+
+function formatTooltip(val: number) {
+  const time = val
+  let h = <number | string>parseInt(String((time / 60 / 60) % 24))
+  h = h < 10 ? '0' + h : h
+  let m = <number | string>Number(parseInt(String((time / 60) % 60)))
+  m = m < 10 ? '0' + m : m
+  let s = <number | string>Number(parseInt(String(time % 60)))
+  s = s < 10 ? '0' + s : s
+  // 作为返回值返回
+  return `${h}:${m}:${s}`
+}
 </script>
 <style>
 .ms-playPage {
@@ -122,6 +151,17 @@ function mousewheel(res: any, t?: boolean) {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.bar:hover > .el-slider__runway > .el-slider__bar,
+.bar:hover > .el-slider__runway > .el-slider__button-wrapper {
+  transition: none;
+  transition-timing-function: cubic-bezier(0.45, 0.45, 0.45, 0.45);
+}
+.bar > .el-slider__runway > .el-slider__bar,
+.bar > .el-slider__runway > .el-slider__button-wrapper {
+  transition: all 1s;
+  transition-timing-function: cubic-bezier(0.45, 0.45, 0.45, 0.45);
 }
 </style>
 <style scoped>
@@ -175,12 +215,14 @@ function mousewheel(res: any, t?: boolean) {
   margin-bottom: 4.375rem;
   background-size: 100% auto;
   background-position: center center;
+  -webkit-app-region: no-drag;
 }
 .main > div:nth-child(1) > div:nth-child(2) {
   height: 3.125rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  position:relative;
 }
 .main > div:nth-child(1) > div:nth-child(2) > div {
   display: flex;
@@ -230,6 +272,31 @@ function mousewheel(res: any, t?: boolean) {
   height: 3.75rem;
 }
 .fo > div:nth-child(2) {
-  width: 60vw;
+  width: 70%;
+}
+.bar {
+  --el-slider-height: 0.3125rem;
+  --el-slider-button-size: 0.4375rem;
+  -webkit-app-region: no-drag;
+}
+
+.musicList {
+  position: absolute;
+  width: calc(100% - 0.3125rem);
+  background: rgba(255, 255, 255, 0.64);
+  backdrop-filter: blur(2.8125rem);
+  -webkit-backdrop-filter: blur(2.8125rem);
+  height: auto;
+  min-height: 10vh;
+  max-height: calc(100vh - 4.5rem - 5rem);
+  bottom: 4.5rem;
+  right: 0.3125rem;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  outline: none;
+}
+.musicList:focus {
+  border: 0;
 }
 </style>

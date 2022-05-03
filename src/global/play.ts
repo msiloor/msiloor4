@@ -30,10 +30,7 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
   let AudioObj: any
   /** 绑定音频标签 */
   function bindAudioObj(Audio: any) {
-    console.log('绑定音频', Audio)
-
     AudioObj = Audio
-    console.log('绑定音频x', AudioObj)
   }
   /** 播放状态 */
   const AudioPlayState = ref<'play' | 'stop'>('stop')
@@ -50,12 +47,7 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
   const playNextType = ref<'OrderPlay' | 'Repeat' | 'Shuffle'>('OrderPlay')
   const playListAlready = ref<Array<number>>([])
   const playPage = ref(false)
-  /*var AudioContext = window.AudioContext
-  const audioCtx = ref(new AudioContext())
-  
-  var oscillatorNode = audioCtx.value.createOscillator()
-  var gainNode = audioCtx.value.createGain()
-  var finish = audioCtx.value.destination*/
+
   const TimeRe = ref<NodeJS.Timer>()
   const fps = ref(1000)
   async function runTimeRe() {
@@ -71,9 +63,9 @@ export const useAudioPlayStore = defineStore('AudioPlay', () => {
 
   async function TimeReFun() {
     //console.log(AudioObj.value.duration, AudioObj.value.currentTime)
-    AudioPlayProgress.value = AudioObj.value.currentTime
+    AudioPlayProgress.value = Number(AudioObj.value.currentTime.toFixed(4))
     AudioPlayDuration.value = AudioObj.value.duration
-    AudioPlayperCentage.value = Number((Number(AudioPlayProgress.value.toFixed(4)) / Number(AudioPlayDuration.value.toFixed(4))).toFixed(4)) * 100
+    AudioPlayperCentage.value = Number((Number((Number(AudioPlayProgress.value.toFixed(4)) / Number(AudioPlayDuration.value.toFixed(4))).toFixed(4)) * 100).toFixed(4))
     if (AudioObj.value.duration == AudioObj.value.currentTime) {
       playNext()
     }
